@@ -54,9 +54,16 @@ class MerchantViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = LedgerEntrySerializer(ledger, many=True)
         return response.Response(serializer.data)
 
-    @action(detail=True, methods=['get'], url_path='bank-accounts')
+    @action(detail=True, methods=['get', 'post'], url_path='bank-accounts')
     def bank_accounts(self, request, pk=None):
         merchant = self.get_object()
+        if request.method == 'POST':
+            serializer = BankAccountSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(merchant=merchant)
+                return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+            return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
         accounts = BankAccount.objects.filter(merchant=merchant)
         serializer = BankAccountSerializer(accounts, many=True)
         return response.Response(serializer.data)
@@ -156,3 +163,11 @@ class MerchantViewSet(viewsets.ReadOnlyModelViewSet):
 class PayoutViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Payout.objects.all()
     serializer_class = PayoutSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        # Add extra details for the receipt view if needed
+        data = serializer.data
+        data['bank_name'] = instance.bank_account.account_holder_name # Placeholder for bank logo/name
+        return response.Response(data)

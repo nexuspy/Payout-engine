@@ -1,51 +1,66 @@
-@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Inter:wght@100;200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-background text-white font-sans;
-  }
+:root {
+  color-scheme: light;
 }
 
-.font-mono {
-  font-family: "JetBrains Mono", monospace;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f7faf9;
+  color: #181c1c;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
-/* Glassmorphism utility */
-.glass {
-  @apply bg-card border border-border rounded-xl;
+.hero-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
 }
 
-@keyframes pulse-dot {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
+.organic-card {
+  background: #ffffff;
+  border: 1px solid rgba(193, 201, 191, 0.15);
+  box-shadow: 0 10px 40px -10px rgba(29, 80, 49, 0.05); /* Soft forest tint shadow */
 }
 
-.pulse-amber {
-  animation: pulse-dot-amber 2s infinite;
+.emerald-mesh {
+  background: radial-gradient(circle at top right, rgba(74, 222, 128, 0.1), transparent 70%),
+              radial-gradient(circle at bottom left, rgba(26, 77, 46, 0.05), transparent 70%);
 }
 
-@keyframes pulse-dot-amber {
-  0% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-  }
+.glass-accent {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slow-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: slow-float 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f7faf9;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c9bf;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a1ada0;
 }
