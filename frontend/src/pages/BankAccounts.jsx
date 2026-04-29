@@ -82,11 +82,30 @@ const BankAccounts = () => {
         </motion.div>
       )}
 
-      <div className="grid grid-cols-3 gap-8">
-        {bankAccounts.map((acc) => (
-          <div key={acc.id} className="bg-neutral-pop rounded-5xl p-10 shadow-organic-lg border border-slate-50 relative overflow-hidden group">
-            <div className="flex justify-between items-start mb-8">
-              <div className="w-14 h-14 bg-neutral-well rounded-2xl flex items-center justify-center text-forest-deep">
+      <motion.div 
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 }
+          }
+        }}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-3 gap-8"
+      >
+        {Array.isArray(bankAccounts) && bankAccounts.map((acc) => (
+          <motion.div 
+            key={acc.id} 
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0 }
+            }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="bg-neutral-pop rounded-5xl p-10 shadow-organic-lg border border-slate-50 relative overflow-hidden group cursor-default transition-all duration-500"
+          >
+            <div className="flex justify-between items-start mb-8 relative z-10">
+              <div className="w-14 h-14 bg-neutral-well rounded-2xl flex items-center justify-center text-forest-deep transition-transform group-hover:rotate-12">
                 <Landmark size={28} />
               </div>
               {acc.is_primary && (
@@ -94,19 +113,20 @@ const BankAccounts = () => {
               )}
             </div>
             
-            <div className="space-y-1 mb-8">
+            <div className="space-y-1 mb-8 relative z-10">
               <p className="text-2xl font-black text-forest-deep">{acc.account_holder_name}</p>
               <p className="text-sm font-bold text-slate-400 font-mono">•••• •••• •••• {acc.account_number.slice(-4)}</p>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-300 font-black text-[10px] uppercase tracking-widest group-hover:text-emerald-vibrant transition-colors">
+            <div className="flex items-center gap-2 text-slate-300 font-black text-[10px] uppercase tracking-widest group-hover:text-emerald-vibrant transition-colors relative z-10">
               <ShieldCheck size={14} /> Verified Gateway
             </div>
 
-            <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-forest-deep/5 blur-3xl rounded-full"></div>
-          </div>
+            <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-forest-deep/5 blur-3xl rounded-full group-hover:bg-emerald-light/10 transition-colors"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-emerald-light/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -6,7 +6,7 @@ const TopBar = ({ merchant, merchants, onSelectMerchant }) => {
     <header className="flex justify-between items-center mb-16">
       <div>
         <h2 className="text-sm font-bold text-slate-300 uppercase tracking-[0.2em] mb-2">Workspace Overview</h2>
-        <h3 className="text-4xl font-extrabold text-forest-deep hero-text">Hello, {merchant?.name.split(' ')[0]}</h3>
+        <h3 className="text-4xl font-extrabold text-forest-deep hero-text">Hello, {merchant?.name ? merchant.name.split(' ')[0] : 'Member'}</h3>
       </div>
 
       <div className="flex items-center gap-8">

@@ -21,9 +21,9 @@ const Settings = () => {
         <div className="col-span-4 space-y-8">
           <div className="bg-neutral-pop rounded-[4rem] p-12 shadow-organic-lg border border-slate-50 relative overflow-hidden">
             <div className="w-24 h-24 bg-forest-deep rounded-[2.5rem] flex items-center justify-center text-white mb-8 text-3xl font-black">
-              {selectedMerchant?.name[0]}
+              {selectedMerchant?.name ? selectedMerchant.name[0] : 'M'}
             </div>
-            <h4 className="text-3xl font-extrabold text-forest-deep hero-text">{selectedMerchant?.name}</h4>
+            <h4 className="text-3xl font-extrabold text-forest-deep hero-text">{selectedMerchant?.name || 'Loading...'}</h4>
             <p className="text-slate-400 font-bold text-sm mb-8">{selectedMerchant?.email}</p>
             
             <div className="space-y-4">
@@ -43,11 +43,30 @@ const Settings = () => {
         <div className="col-span-8 bg-neutral-pop rounded-6xl p-12 shadow-organic-lg border border-slate-50 space-y-6">
           <h4 className="text-2xl font-extrabold text-forest-deep hero-text mb-10">Platform Control</h4>
           
-          <div className="space-y-4">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08 }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+            className="space-y-4"
+          >
             {sections.map((s) => (
-              <div key={s.title} className="flex items-center justify-between p-6 bg-neutral-well/30 rounded-[2.5rem] hover:bg-neutral-well/60 transition-all cursor-pointer group">
+              <motion.div 
+                key={s.title} 
+                variants={{
+                  hidden: { opacity: 0, x: 20 },
+                  show: { opacity: 1, x: 0 }
+                }}
+                whileHover={{ x: 10, backgroundColor: "rgba(235, 238, 237, 0.6)" }}
+                className="flex items-center justify-between p-6 bg-neutral-well/30 rounded-[2.5rem] transition-all cursor-pointer group"
+              >
                 <div className="flex items-center gap-6">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${s.color}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 ${s.color}`}>
                     <s.icon size={24} />
                   </div>
                   <div>
@@ -56,9 +75,9 @@ const Settings = () => {
                   </div>
                 </div>
                 <ChevronRight size={20} className="text-slate-300 group-hover:text-forest-deep transition-colors" />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <div className="pt-10 border-t border-slate-100 mt-10">
             <div className="bg-emerald-vibrant/5 p-8 rounded-4xl flex items-center justify-between">
