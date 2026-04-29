@@ -10,30 +10,24 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "installCommand": "npm install",
+        "buildCommand": "npm run build"
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend/vercel_app.py"
+      "source": "/api/:path*",
+      "destination": "backend/vercel_app.py"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "backend/static/$1"
+      "source": "/static/:path*",
+      "destination": "backend/static/:path*"
     },
     {
-      "src": "/(.*)",
-      "dest": "frontend/$1",
-      "continue": true
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/.*",
-      "dest": "frontend/index.html"
+      "source": "/(.*)",
+      "destination": "frontend/$1"
     }
   ]
 }
