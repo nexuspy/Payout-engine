@@ -1,33 +1,13 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "backend/vercel_app.py",
-      "use": "@vercel/python",
-      "config": { "runtime": "python3.9" }
-    },
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist",
-        "installCommand": "npm install",
-        "buildCommand": "npm run build"
-      }
+    "experimentalServices": {
+        "frontend": {
+            "entrypoint": "frontend",
+            "routePrefix": "/",
+            "framework": "vite"
+        },
+        "backend": {
+            "entrypoint": "backend",
+            "routePrefix": "/_/backend"
+        }
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "backend/vercel_app.py"
-    },
-    {
-      "source": "/static/:path*",
-      "destination": "backend/static/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "frontend/$1"
-    }
-  ]
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: '/_/backend/api/v1',
 });
 
 export const getMerchants = () => api.get('/merchants/');
